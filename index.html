@@ -7,6 +7,16 @@
 <title>Daniel Distributes</title>
 
 <style>
+  .product {
+  background: #171717;
+  border-radius: 16px;
+  padding: 22px;
+  transition: transform 0.2s ease;
+}
+.product:hover {
+  transform: translateY(-4px);
+}
+
   .product img {
   width: 100%;
   border-radius: 10px;
@@ -75,14 +85,12 @@
     font-weight: bold;
   }
 
-  .buy-btn {
-    display: inline-block;
-    background: white;
-    color: black;
-    text-decoration: none;
-    padding: 12px 20px;
-    border-radius: 8px;
-    font-weight: bold;
+ .buy-btn {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+}
+
   }
 
   .buy-btn:hover {
@@ -106,6 +114,11 @@
 <header>
   <h1>Daniel Distributes</h1>
   <div class="tagline">Only the best 1:1 and affordable seller</div>
+  <section style="text-align:center;padding:40px 20px;">
+  <h2 style="font-size:28px;">Premium Products. Affordable Prices.</h2>
+  <p style="color:#aaa;">Shop curated accessories, fragrances, and tech.</p>
+</section>
+
   <div class="notice">
     Independent reseller • Not affiliated with any brands shown or referenced.
   </div>
