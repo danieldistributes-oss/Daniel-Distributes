@@ -1,23 +1,146 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Store</title>
-  <style>
-    body { font-family: Arial; text-align: center; padding: 40px; }
-    .product { border: 1px solid #ccc; padding: 20px; margin: 20px; }
-    button { padding: 10px 20px; font-size: 16px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Distributes</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0d0d0d;
+    color: white;
+  }
+
+  header {
+    text-align: center;
+    padding: 50px 20px;
+    border-bottom: 1px solid #222;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 34px;
+    letter-spacing: 1px;
+  }
+
+  .tagline {
+    margin-top: 10px;
+    color: #aaa;
+  }
+
+  .notice {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #888;
+  }
+
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+    padding: 30px;
+    max-width: 1100px;
+    margin: auto;
+  }
+
+  .product {
+    background: #171717;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+  }
+
+  .product h2 {
+    margin-top: 0;
+    font-size: 20px;
+  }
+
+  .desc {
+    color: #bbb;
+    font-size: 14px;
+    min-height: 40px;
+  }
+
+  .price {
+    font-size: 22px;
+    margin: 12px 0;
+    font-weight: bold;
+  }
+
+  .buy-btn {
+    display: inline-block;
+    background: white;
+    color: black;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+
+  .buy-btn:hover {
+    opacity: 0.85;
+  }
+
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+    border-top: 1px solid #222;
+    font-size: 14px;
+  }
+
+  a { color: white; }
+</style>
 </head>
+
 <body>
 
-<h1>Welcome to My Store</h1>
-<p>Buy directly from me.</p>
+<header>
+  <h1>Daniel Distributes</h1>
+  <div class="tagline">Only the best and affordable seller</div>
+  <div class="notice">
+    Independent reseller • Not affiliated with any brands shown or referenced.
+  </div>
+</header>
 
-<div class="product">
-  <h2>Product Name</h2>
-  <p>$25</p>
-  <button>Buy Now</button>
-</div>
+<section class="products">
+
+  <div class="product">
+    <h2>Premium Wireless Earbuds</h2>
+    <p class="desc">Active noise cancellation earbuds with immersive audio.</p>
+    <div class="price">$84.99</div>
+    <a class="buy-btn" href="https://buy.stripe.com/test_3cIaEZ4Uf5BH7Es6Uhao800">Buy Now</a>
+  </div>
+
+  <div class="product">
+    <h2>Luxury Inspired Fragrance (100ml)</h2>
+    <p class="desc">Fresh, clean scent with long-lasting performance.</p>
+    <div class="price">$129.99</div>
+    <a class="buy-btn" href="https://buy.stripe.com/bJecN69RV8dP7495pG43S01">Buy Now</a>
+  </div>
+
+  <div class="product">
+    <h2>Signature Cologne (75ml)</h2>
+    <p class="desc">Bold premium scent designed for everyday wear.</p>
+    <div class="price">$119.99</div>
+    <a class="buy-btn" href="https://buy.stripe.com/aFabJ20hl8dP0FLg4k43S02">Buy Now</a>
+  </div>
+
+  <div class="product">
+    <h2>Elegant Perfume (90ml)</h2>
+    <p class="desc">Smooth floral fragrance with modern notes.</p>
+    <div class="price">$87.99</div>
+    <a class="buy-btn" href="https://buy.stripe.com/cNi6oI9RVfGh2NTdWc43S03">Buy Now</a>
+  </div>
+
+</section>
+
+<footer>
+  Follow on TikTok:
+  <a href="https://www.tiktok.com/@daniel.distributes">@daniel.distributes</a>
+</footer>
 
 </body>
 </html>
