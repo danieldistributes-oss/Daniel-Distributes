@@ -10,6 +10,7 @@
   --bg:#060606;
   --card:#111;
   --accent:#c9a46d;
+  --highlight:#ffd700;
   --muted:#9f9f9f;
 }
 
@@ -109,7 +110,6 @@ body{
   padding:18px;
   transition:.3s;
   animation:fadeUp .8s ease both;
-  position:relative;
 }
 
 .product:hover{
@@ -151,8 +151,6 @@ body{
   font-weight:bold;
   cursor:pointer;
   transition:.2s;
-  position:relative;
-  overflow:hidden;
 }
 
 .btn:hover{
@@ -173,24 +171,21 @@ body{
   z-index:1000;
 }
 
-.cart-toggle .count{
+.cart-count{
   background:red;
   color:white;
   font-size:12px;
-  font-weight:bold;
   padding:2px 6px;
   border-radius:50%;
-  position:absolute;
-  top:-6px;
-  right:-6px;
+  margin-left:6px;
+  vertical-align:top;
 }
 
-/* CART PANEL */
 #cart{
   position:fixed;
   right:-360px;
   top:0;
-  width:360px;
+  width:320px;
   height:100%;
   background:#0f0f0f;
   border-left:1px solid #333;
@@ -210,11 +205,13 @@ body{
   align-items:center;
 }
 
-.cart-item span.remove{
-  color:red;
+.cart-item button{
+  background:red;
+  color:white;
+  border:none;
+  border-radius:6px;
+  padding:2px 6px;
   cursor:pointer;
-  font-weight:bold;
-  margin-left:10px;
 }
 
 /* SUPPORT */
@@ -264,17 +261,64 @@ footer{
   to{opacity:1; transform:translateY(0);}
 }
 
-@keyframes addAnim {
-  0%{transform:scale(1);}
-  50%{transform:scale(1.15);}
-  100%{transform:scale(1);}
+/* PROMO POPUP */
+#promoPopup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0.8);
+  width:320px;
+  background:var(--card);
+  border:2px solid var(--accent);
+  border-radius:14px;
+  padding:20px;
+  text-align:center;
+  z-index:2000;
+  display:none;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+  opacity:0;
+  transition:opacity 0.4s ease, transform 0.4s ease;
 }
+
+#promoPopup.show{
+  display:block;
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+#promoPopup h2{
+  color:var(--accent);
+  margin-bottom:12px;
+  text-shadow: 0 0 10px #ffd700, 0 0 20px #c9a46d;
+}
+
+#promoPopup p{
+  color:var(--highlight);
+  margin-bottom:16px;
+  text-shadow: 0 0 6px #ffd700;
+}
+
+#promoPopup button{
+  padding:10px 16px;
+  background:var(--accent);
+  color:black;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  transition:.2s;
+}
+
+#promoPopup button:hover{
+  background:var(--highlight);
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="cart-toggle" onclick="toggleCart()">🛒 Cart <span class="count" id="cartCount">0</span></div>
+<div class="cart-toggle" onclick="toggleCart()">🛒 Cart <span class="cart-count" id="cartCount">0</span></div>
 
 <section class="hero">
   <h1>Daniel Distributes</h1>
@@ -298,10 +342,10 @@ footer{
 
   <div class="product">
     <img src="Airpods.jpg">
-    <h2>Fairpods Pro3</h2>
+    <h2>Fairpods pro3</h2>
     <p class="desc">Active noise cancellation Fairpods.</p>
     <div class="price">$84.99</div>
-    <button class="btn" onclick="addToCart('Fairpods Pro3',84.99,'https://buy.stripe.com/test_3cIaEZ4Uf5BH7Es6Uhao800')">Add to Cart</button>
+    <button class="btn" onclick="addToCart('Airpods Pro3',84.99)">Add to Cart</button>
   </div>
 
   <div class="product">
@@ -309,7 +353,7 @@ footer{
     <h2>LV Imagine</h2>
     <p class="desc">Fresh clean scent 100ml.</p>
     <div class="price">$129.99</div>
-    <button class="btn" onclick="addToCart('LV Imagine',129.99,'https://buy.stripe.com/bJecN69RV8dP7495pG43S01')">Add to Cart</button>
+    <button class="btn" onclick="addToCart('LV Imagine',129.99)">Add to Cart</button>
   </div>
 
   <div class="product">
@@ -317,7 +361,7 @@ footer{
     <h2>Creed Aventus</h2>
     <p class="desc">Bold premium scent.</p>
     <div class="price">$119.99</div>
-    <button class="btn" onclick="addToCart('Creed Aventus',119.99,'https://buy.stripe.com/aFabJ20hl8dP0FLg4k43S02')">Add to Cart</button>
+    <button class="btn" onclick="addToCart('Creed Aventus',119.99)">Add to Cart</button>
   </div>
 
   <div class="product">
@@ -325,7 +369,7 @@ footer{
     <h2>YSL Libre</h2>
     <p class="desc">Smooth floral fragrance.</p>
     <div class="price">$87.99</div>
-    <button class="btn" onclick="addToCart('YSL Libre',87.99,'https://buy.stripe.com/cNi6oI9RVfGh2NTdWc43S03')">Add to Cart</button>
+    <button class="btn" onclick="addToCart('YSL Libre',87.99)">Add to Cart</button>
   </div>
 
 </section>
@@ -334,7 +378,6 @@ footer{
   <h2>Your Cart</h2>
   <div id="cartItems"></div>
   <h3 id="total">$0.00</h3>
-  <button class="btn" onclick="checkout()">Checkout</button>
 </div>
 
 <div class="support" onclick="toggleSupport()">💬 AI Support</div>
@@ -344,6 +387,13 @@ footer{
   <textarea rows="3" placeholder="Type your message..."></textarea>
 </div>
 
+<!-- PROMO POPUP -->
+<div id="promoPopup">
+  <h2>Special Offer!</h2>
+  <p>Use promo code <strong>DD10</strong> for 10% off</p>
+  <button onclick="closePromo()">Got it!</button>
+</div>
+
 <footer>
   Independent reseller • Follow @daniel.distributes on TikTok
 </footer>
@@ -351,13 +401,10 @@ footer{
 <script>
 let cart=[];
 
-function addToCart(name,price,stripeLink){
-  cart.push({name,price,stripeLink});
+function addToCart(name,price){
+  cart.push({name,price});
   renderCart();
-  // Add animation
-  const btn = event.currentTarget;
-  btn.style.animation='addAnim 0.3s ease';
-  setTimeout(()=>btn.style.animation='',300);
+  animateAdd();
 }
 
 function removeFromCart(index){
@@ -367,15 +414,14 @@ function removeFromCart(index){
 
 function renderCart(){
   const box=document.getElementById("cartItems");
-  const count=document.getElementById("cartCount");
   let total=0;
   box.innerHTML="";
   cart.forEach((i,idx)=>{
     total+=i.price;
-    box.innerHTML+=`<div class="cart-item">${i.name} - $${i.price.toFixed(2)} <span class="remove" onclick="removeFromCart(${idx})">×</span></div>`;
+    box.innerHTML+=`<div class="cart-item">${i.name} - $${i.price.toFixed(2)} <button onclick="removeFromCart(${idx})">X</button></div>`;
   });
   document.getElementById("total").innerText="$"+total.toFixed(2);
-  count.innerText = cart.length; // Update counter
+  document.getElementById("cartCount").innerText=cart.length;
 }
 
 function toggleCart(){
@@ -387,14 +433,44 @@ function toggleSupport(){
   b.style.display=b.style.display==="block"?"none":"block";
 }
 
-function checkout(){
-  if(cart.length===0){
-    alert("Your cart is empty!");
-    return;
+// Promo popup functions
+function showPromo(){
+  if(!localStorage.getItem("promoSeen")){
+    const popup = document.getElementById("promoPopup");
+    popup.classList.add("show");
+    localStorage.setItem("promoSeen","true");
   }
-  // Open Stripe link for first product (demo)
-  window.open(cart[0].stripeLink,'_blank');
 }
+
+function closePromo(){
+  const popup = document.getElementById("promoPopup");
+  popup.classList.remove("show");
+  setTimeout(()=>popup.style.display="none",400);
+}
+
+// Add-to-cart animation
+function animateAdd(){
+  const popup = document.createElement("div");
+  popup.innerText = "Added to Cart!";
+  popup.style.position = "fixed";
+  popup.style.top = "50px";
+  popup.style.right = "50px";
+  popup.style.background = "var(--accent)";
+  popup.style.color = "black";
+  popup.style.padding = "10px 16px";
+  popup.style.borderRadius = "10px";
+  popup.style.fontWeight = "bold";
+  popup.style.zIndex = "2000";
+  popup.style.opacity = "0";
+  popup.style.transition = "all 0.4s ease";
+  document.body.appendChild(popup);
+  setTimeout(()=>{popup.style.opacity="1";popup.style.transform="translateY(-10px)";},10);
+  setTimeout(()=>{popup.style.opacity="0";popup.style.transform="translateY(-30px)";},1200);
+  setTimeout(()=>document.body.removeChild(popup),1600);
+}
+
+// Show promo on load
+window.onload = showPromo;
 </script>
 
 </body>
