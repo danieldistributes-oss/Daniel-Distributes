@@ -109,6 +109,7 @@ body{
   padding:18px;
   transition:.3s;
   animation:fadeUp .8s ease both;
+  position:relative;
 }
 
 .product:hover{
@@ -150,6 +151,8 @@ body{
   font-weight:bold;
   cursor:pointer;
   transition:.2s;
+  position:relative;
+  overflow:hidden;
 }
 
 .btn:hover{
@@ -174,7 +177,7 @@ body{
   position:fixed;
   right:-360px;
   top:0;
-  width:320px;
+  width:360px;
   height:100%;
   background:#0f0f0f;
   border-left:1px solid #333;
@@ -189,6 +192,16 @@ body{
 .cart-item{
   border-bottom:1px solid #333;
   padding:10px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.cart-item span.remove{
+  color:red;
+  cursor:pointer;
+  font-weight:bold;
+  margin-left:10px;
 }
 
 /* SUPPORT */
@@ -237,6 +250,12 @@ footer{
   from{opacity:0; transform:translateY(20px);}
   to{opacity:1; transform:translateY(0);}
 }
+
+@keyframes addAnim {
+  0%{transform:scale(1);}
+  50%{transform:scale(1.15);}
+  100%{transform:scale(1);}
+}
 </style>
 </head>
 
@@ -266,10 +285,10 @@ footer{
 
   <div class="product">
     <img src="Airpods.jpg">
-    <h2>Fairpods pro3</h2>
+    <h2>Fairpods Pro3</h2>
     <p class="desc">Active noise cancellation Fairpods.</p>
     <div class="price">$84.99</div>
-    <button class="btn" onclick="addToCart('Earbuds',84.99)">Add to Cart</button>
+    <button class="btn" onclick="addToCart('Fairpods Pro3',84.99,'https://buy.stripe.com/test_3cIaEZ4Uf5BH7Es6Uhao800')">Add to Cart</button>
   </div>
 
   <div class="product">
@@ -277,23 +296,23 @@ footer{
     <h2>LV Imagine</h2>
     <p class="desc">Fresh clean scent 100ml.</p>
     <div class="price">$129.99</div>
-    <button class="btn" onclick="addToCart('Fragrance',129.99)">Add to Cart</button>
+    <button class="btn" onclick="addToCart('LV Imagine',129.99,'https://buy.stripe.com/bJecN69RV8dP7495pG43S01')">Add to Cart</button>
   </div>
 
   <div class="product">
     <img src="Creed.png">
-    <h2>Screed Aventus</h2>
+    <h2>Creed Aventus</h2>
     <p class="desc">Bold premium scent.</p>
     <div class="price">$119.99</div>
-    <button class="btn" onclick="addToCart('Cologne',119.99)">Add to Cart</button>
+    <button class="btn" onclick="addToCart('Creed Aventus',119.99,'https://buy.stripe.com/aFabJ20hl8dP0FLg4k43S02')">Add to Cart</button>
   </div>
 
   <div class="product">
     <img src="YSL.png">
-    <h2>YSL Liberal</h2>
+    <h2>YSL Libre</h2>
     <p class="desc">Smooth floral fragrance.</p>
     <div class="price">$87.99</div>
-    <button class="btn" onclick="addToCart('Perfume',87.99)">Add to Cart</button>
+    <button class="btn" onclick="addToCart('YSL Libre',87.99,'https://buy.stripe.com/cNi6oI9RVfGh2NTdWc43S03')">Add to Cart</button>
   </div>
 
 </section>
@@ -302,6 +321,7 @@ footer{
   <h2>Your Cart</h2>
   <div id="cartItems"></div>
   <h3 id="total">$0.00</h3>
+  <button class="btn" onclick="checkout()">Checkout</button>
 </div>
 
 <div class="support" onclick="toggleSupport()">💬 AI Support</div>
@@ -318,8 +338,17 @@ footer{
 <script>
 let cart=[];
 
-function addToCart(name,price){
-  cart.push({name,price});
+function addToCart(name,price,stripeLink){
+  cart.push({name,price,stripeLink});
+  renderCart();
+  // Add animation
+  const btn = event.currentTarget;
+  btn.style.animation='addAnim 0.3s ease';
+  setTimeout(()=>btn.style.animation='',300);
+}
+
+function removeFromCart(index){
+  cart.splice(index,1);
   renderCart();
 }
 
@@ -327,9 +356,9 @@ function renderCart(){
   const box=document.getElementById("cartItems");
   let total=0;
   box.innerHTML="";
-  cart.forEach(i=>{
+  cart.forEach((i,idx)=>{
     total+=i.price;
-    box.innerHTML+=`<div class="cart-item">${i.name} - $${i.price}</div>`;
+    box.innerHTML+=`<div class="cart-item">${i.name} - $${i.price.toFixed(2)} <span class="remove" onclick="removeFromCart(${idx})">×</span></div>`;
   });
   document.getElementById("total").innerText="$"+total.toFixed(2);
 }
@@ -341,6 +370,15 @@ function toggleCart(){
 function toggleSupport(){
   const b=document.getElementById("supportBox");
   b.style.display=b.style.display==="block"?"none":"block";
+}
+
+function checkout(){
+  if(cart.length===0){
+    alert("Your cart is empty!");
+    return;
+  }
+  // For demo, just open first product Stripe link
+  window.open(cart[0].stripeLink,'_blank');
 }
 </script>
 
