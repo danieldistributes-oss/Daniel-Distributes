@@ -173,6 +173,19 @@ body{
   z-index:1000;
 }
 
+.cart-toggle .count{
+  background:red;
+  color:white;
+  font-size:12px;
+  font-weight:bold;
+  padding:2px 6px;
+  border-radius:50%;
+  position:absolute;
+  top:-6px;
+  right:-6px;
+}
+
+/* CART PANEL */
 #cart{
   position:fixed;
   right:-360px;
@@ -261,7 +274,7 @@ footer{
 
 <body>
 
-<div class="cart-toggle" onclick="toggleCart()">🛒 Cart</div>
+<div class="cart-toggle" onclick="toggleCart()">🛒 Cart <span class="count" id="cartCount">0</span></div>
 
 <section class="hero">
   <h1>Daniel Distributes</h1>
@@ -354,6 +367,7 @@ function removeFromCart(index){
 
 function renderCart(){
   const box=document.getElementById("cartItems");
+  const count=document.getElementById("cartCount");
   let total=0;
   box.innerHTML="";
   cart.forEach((i,idx)=>{
@@ -361,6 +375,7 @@ function renderCart(){
     box.innerHTML+=`<div class="cart-item">${i.name} - $${i.price.toFixed(2)} <span class="remove" onclick="removeFromCart(${idx})">×</span></div>`;
   });
   document.getElementById("total").innerText="$"+total.toFixed(2);
+  count.innerText = cart.length; // Update counter
 }
 
 function toggleCart(){
@@ -377,7 +392,7 @@ function checkout(){
     alert("Your cart is empty!");
     return;
   }
-  // For demo, just open first product Stripe link
+  // Open Stripe link for first product (demo)
   window.open(cart[0].stripeLink,'_blank');
 }
 </script>
