@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daniel Distributes</title>
+
 <style>
 :root{
   --bg:#060606;
@@ -11,12 +12,9 @@
   --accent:#c9a46d;
   --muted:#9f9f9f;
 }
-
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
-
 body{background:var(--bg);color:white;overflow-x:hidden;}
 
-/* HERO */
 .hero{
   min-height:90vh;
   display:flex;
@@ -27,17 +25,10 @@ body{background:var(--bg);color:white;overflow-x:hidden;}
   padding:20px;
   background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.85)), url("images/hero.jpg") center/cover no-repeat;
 }
-.hero h1{font-size:56px;margin-bottom:12px;letter-spacing:1px;animation:fadeUp .8s ease;}
-.hero p{color:var(--muted);font-size:18px;animation:fadeUp 1s ease;}
-.drop{margin-top:20px;padding:8px 16px;border-radius:20px;background:rgba(201,164,109,.18);border:1px solid var(--accent);color:var(--accent);font-size:12px;letter-spacing:1px;animation:fadeUp 1.2s ease;}
+.hero h1{font-size:56px;margin-bottom:12px;}
+.hero p{color:var(--muted);}
+.drop{margin-top:20px;padding:8px 16px;border-radius:20px;background:rgba(201,164,109,.18);border:1px solid var(--accent);color:var(--accent);font-size:12px;}
 
-/* TRUST & SOCIAL */
-.trust{display:flex;justify-content:center;gap:25px;flex-wrap:wrap;padding:18px;color:#bbb;border-bottom:1px solid #222;font-size:14px;}
-.social{text-align:center;padding:28px 20px;}
-.social .big{font-size:28px;color:var(--accent);font-weight:bold;}
-.social .small{color:#aaa;margin-top:6px;}
-
-/* PRODUCTS */
 .products{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
@@ -51,59 +42,90 @@ body{background:var(--bg);color:white;overflow-x:hidden;}
   border-radius:18px;
   padding:18px;
   border:1px solid rgba(255,255,255,.05);
-  transition:.3s;
-  animation:fadeUp .8s ease both;
 }
-.product:hover{transform:translateY(-8px);box-shadow:0 15px 30px rgba(201,164,109,.2);}
 .product img{width:100%;height:300px;object-fit:cover;border-radius:12px;}
 .product h2{margin:12px 0 6px;}
 .desc{color:#bdbdbd;font-size:14px;}
 .price{color:var(--accent);font-size:24px;font-weight:bold;margin-top:10px;}
-.btn{width:100%;margin-top:14px;padding:12px;border:none;border-radius:9px;background:var(--accent);color:black;font-weight:bold;cursor:pointer;transition:.2s;}
-.btn:hover{transform:scale(1.02);}
 
-/* CART */
-.cart-toggle{
-  position:fixed;top:18px;right:18px;background:var(--accent);color:black;padding:10px 14px;border-radius:10px;font-weight:bold;cursor:pointer;z-index:1000;
+.btn{
+  width:100%;
+  margin-top:14px;
+  padding:12px;
+  border:none;
+  border-radius:9px;
+  background:var(--accent);
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
 }
-.cart-count{margin-left:6px;background:black;color:white;padding:2px 6px;border-radius:50%;font-size:12px;}
+
+.cart-toggle{
+  position:fixed;
+  top:18px;
+  right:18px;
+  background:var(--accent);
+  color:black;
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:bold;
+  cursor:pointer;
+  z-index:1000;
+}
+.cart-count{
+  margin-left:6px;
+  background:black;
+  color:white;
+  padding:2px 6px;
+  border-radius:50%;
+  font-size:12px;
+}
+
 #cart{
-  position:fixed;right:-360px;top:0;width:360px;height:100%;background:#0f0f0f;border-left:1px solid #333;padding:20px;transition:.35s;overflow:auto;z-index:999;
+  position:fixed;
+  right:-360px;
+  top:0;
+  width:360px;
+  height:100%;
+  background:#0f0f0f;
+  border-left:1px solid #333;
+  padding:20px;
+  transition:.35s;
+  overflow:auto;
+  z-index:999;
 }
 #cart.open{right:0;}
+
 .cart-item{
   border-bottom:1px solid #333;
   padding:10px 0;
+}
+.qty-controls{
   display:flex;
-  justify-content:space-between;
-  align-items:center;
+  gap:6px;
+  margin-top:6px;
 }
-.cart-item button{
-  background:red;color:white;border:none;padding:2px 6px;border-radius:6px;cursor:pointer;
-}
-
-/* SUPPORT */
-.support{
-  position:fixed;bottom:20px;left:20px;background:#111;border:1px solid #333;padding:12px 14px;border-radius:12px;cursor:pointer;
-}
-.support-box{
-  position:fixed;bottom:70px;left:20px;width:270px;background:#111;border:1px solid #333;border-radius:12px;padding:12px;display:none;
-}
-.support-box textarea{
-  width:100%;background:#0a0a0a;color:white;border:1px solid #333;border-radius:8px;padding:8px;
+.qty-controls button{
+  background:#222;
+  color:white;
+  border:1px solid #444;
+  padding:2px 8px;
+  border-radius:6px;
+  cursor:pointer;
 }
 
-/* PROMO */
-.promo-popup{
-  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;border:2px solid var(--accent);padding:20px;border-radius:14px;display:none;z-index:10000;text-align:center;animation:fadeUp 0.5s ease;
+footer{text-align:center;padding:30px;color:#777;}
+
+.toast{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#111;
+  border:1px solid var(--accent);
+  padding:10px 14px;
+  border-radius:8px;
+  z-index:9999;
 }
-.promo-popup button{margin-top:12px;padding:8px 14px;background:var(--accent);color:black;border:none;border-radius:8px;cursor:pointer;}
-
-/* FOOTER */
-footer{text-align:center;padding:35px;color:#777;border-top:1px solid #222;font-size:14px;}
-
-/* ANIMATION */
-@keyframes fadeUp{from{opacity:0; transform:translateY(20px);}to{opacity:1; transform:translateY(0);}}
 </style>
 </head>
 <body>
@@ -116,21 +138,10 @@ footer{text-align:center;padding:35px;color:#777;border-top:1px solid #222;font-
   <div class="drop">NEW DROP • LIMITED STOCK</div>
 </section>
 
-<section class="trust">
-  <div>✔ Secure Checkout</div>
-  <div>✔ Fast Shipping</div>
-  <div>✔ Real Customer Support</div>
-  <div>✔ Satisfaction Guaranteed</div>
-</section>
-
-<section class="social">
-  <div class="big">1,000+ Happy Customers</div>
-  <div class="small">Rated 4.9★ • New Drops Weekly</div>
-</section>
-
 <section class="products">
+
   <div class="product">
-    <img src="images/Airpods.jpg">
+    <img src="images/airpods.jpg" onerror="this.src='images/fallback.jpg'">
     <h2>Fairpods Pro3</h2>
     <p class="desc">Active noise cancellation Fairpods.</p>
     <div class="price">$84.99</div>
@@ -138,7 +149,7 @@ footer{text-align:center;padding:35px;color:#777;border-top:1px solid #222;font-
   </div>
 
   <div class="product">
-    <img src="images/Luis Vuitton.png">
+    <img src="images/louis-vuitton.png" onerror="this.src='images/fallback.jpg'">
     <h2>LV Imagination (100ml)</h2>
     <p class="desc">Fresh clean scent 100ml.</p>
     <div class="price">$129.99</div>
@@ -146,7 +157,7 @@ footer{text-align:center;padding:35px;color:#777;border-top:1px solid #222;font-
   </div>
 
   <div class="product">
-    <img src="images/Creed.png">
+    <img src="images/creed.png" onerror="this.src='images/fallback.jpg'">
     <h2>Creed Aventus (75ml)</h2>
     <p class="desc">Bold premium scent.</p>
     <div class="price">$119.99</div>
@@ -154,12 +165,13 @@ footer{text-align:center;padding:35px;color:#777;border-top:1px solid #222;font-
   </div>
 
   <div class="product">
-    <img src="images/YSL.png">
+    <img src="images/ysl.png" onerror="this.src='images/fallback.jpg'">
     <h2>YSL Libre (90ml)</h2>
     <p class="desc">Smooth floral fragrance.</p>
     <div class="price">$87.99</div>
     <button class="btn" onclick="addToCart('YSL Libre',87.99)">Add to Cart</button>
   </div>
+
 </section>
 
 <div id="cart">
@@ -169,34 +181,35 @@ footer{text-align:center;padding:35px;color:#777;border-top:1px solid #222;font-
   <button class="btn" onclick="checkout()">Checkout</button>
 </div>
 
-<div class="support" onclick="toggleSupport()">💬 AI Support</div>
-<div class="support-box" id="supportBox">
-  <strong>Customer Support</strong>
-  <p style="color:#aaa;font-size:13px;">Usually replies within 10 minutes.</p>
-  <textarea rows="3" placeholder="Type your message..."></textarea>
-</div>
-
-<div class="promo-popup" id="promo">
-  <h2>🎉 Use Promo Code DD10</h2>
-  <p>Get 10% off your first order!</p>
-  <button onclick="closePromo()">Got it!</button>
-</div>
-
 <footer>
   Independent reseller • Follow @daniel.distributes on TikTok
 </footer>
 
 <script>
-let cart=[];
-function addToCart(name,price){
-  cart.push({name,price});
-  renderCart();
-  // popup animation
-  alert(name+" added to cart!");
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function toast(msg){
+  const t=document.createElement("div");
+  t.className="toast";
+  t.innerText=msg;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2000);
 }
 
-function removeFromCart(index){
-  cart.splice(index,1);
+function addToCart(name,price){
+  const existing = cart.find(i=>i.name===name);
+  if(existing){
+    existing.qty++;
+  }else{
+    cart.push({name,price,qty:1});
+  }
+  renderCart();
+  toast(name+" added");
+}
+
+function changeQty(index,amount){
+  cart[index].qty += amount;
+  if(cart[index].qty<=0) cart.splice(index,1);
   renderCart();
 }
 
@@ -204,12 +217,27 @@ function renderCart(){
   const box=document.getElementById("cartItems");
   let total=0;
   box.innerHTML="";
+
   cart.forEach((item,i)=>{
-    total+=item.price;
-    box.innerHTML+=`<div class="cart-item">${item.name} - $${item.price.toFixed(2)} <button onclick="removeFromCart(${i})">X</button></div>`;
+    total += item.price * item.qty;
+
+    box.innerHTML += `
+      <div class="cart-item">
+        <strong>${item.name}</strong><br>
+        $${item.price.toFixed(2)} × ${item.qty}
+        <div class="qty-controls">
+          <button onclick="changeQty(${i},-1)">-</button>
+          <button onclick="changeQty(${i},1)">+</button>
+        </div>
+      </div>
+    `;
   });
+
   document.getElementById("total").innerText="$"+total.toFixed(2);
-  document.getElementById("cartCount").innerText=cart.length;
+  document.getElementById("cartCount").innerText=
+    cart.reduce((a,b)=>a+b.qty,0);
+
+  localStorage.setItem("cart",JSON.stringify(cart));
 }
 
 function toggleCart(){
@@ -217,25 +245,16 @@ function toggleCart(){
 }
 
 function checkout(){
-  if(cart.length===0){alert("Your cart is empty!"); return;}
-  window.location.href="YOUR_STRIPE_CHECKOUT_URL";
-}
-
-function toggleSupport(){
-  const box=document.getElementById("supportBox");
-  box.style.display=box.style.display==="block"?"none":"block";
-}
-
-// Promo popup
-window.onload=function(){
-  if(!localStorage.getItem('promoShown')){
-    document.getElementById('promo').style.display='block';
-    localStorage.setItem('promoShown','true');
+  if(cart.length===0){
+    toast("Cart is empty");
+    return;
   }
-};
-function closePromo(){
-  document.getElementById('promo').style.display='none';
+
+  const data = encodeURIComponent(JSON.stringify(cart));
+  window.location.href = "checkout.html?cart="+data;
 }
+
+renderCart();
 </script>
 
 </body>
