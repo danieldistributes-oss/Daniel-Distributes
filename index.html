@@ -1,116 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daniel Distributes</title>
+<script src="https://js.stripe.com/v3/"></script>
 <style>
-:root{
-  --bg:#060606;
-  --card:#111;
-  --accent:#c9a46d;
-  --highlight:#ffd700;
-  --muted:#9f9f9f;
+:root {
+  --bg: #060606;
+  --card: #111;
+  --accent: #c9a46d;
+  --muted: #9f9f9f;
 }
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif;}
 body{background:var(--bg);color:white;overflow-x:hidden;}
-
-/* HERO */
-.hero{
-  min-height:90vh;
-  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-  padding:20px;
-  background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.85)),url("hero.jpg") center/cover no-repeat;
-}
-.hero h1{font-size:56px;letter-spacing:1px;animation:fadeUp .8s ease;}
-.hero p{margin-top:10px;font-size:18px;color:var(--muted);animation:fadeUp 1s ease;}
-.drop{margin-top:20px;background:rgba(201,164,109,.18);border:1px solid var(--accent);color:var(--accent);
-  padding:8px 16px;border-radius:20px;font-size:12px;letter-spacing:1px;animation:fadeUp 1.2s ease;}
-
-/* TRUST & SOCIAL */
-.trust{display:flex;justify-content:center;gap:25px;flex-wrap:wrap;padding:18px;color:#bbb;border-bottom:1px solid #222;font-size:14px;}
-.social{text-align:center;padding:28px 20px;}
-.social .big{font-size:28px;color:var(--accent);font-weight:bold;}
-.social .small{color:#aaa;margin-top:6px;}
-
-/* PRODUCTS */
-.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:24px;padding:45px 28px;max-width:1250px;margin:auto;}
-.product{background:rgba(20,20,20,.95);border:1px solid rgba(255,255,255,.05);border-radius:18px;padding:18px;transition:.3s;animation:fadeUp .8s ease both;}
+header{padding:50px 20px;text-align:center;}
+header h1{font-size:56px;color:var(--accent);}
+header .tagline{color:var(--muted);margin-top:8px;}
+.hero{min-height:80vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px;}
+.hero h2{font-size:28px;margin-bottom:8px;}
+.hero .drop{margin-top:12px;padding:8px 16px;border:1px solid var(--accent);border-radius:20px;color:var(--accent);}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:24px;padding:40px;max-width:1200px;margin:auto;}
+.product{background:rgba(20,20,20,.95);border-radius:16px;padding:18px;transition:.3s;position:relative;}
 .product:hover{transform:translateY(-8px);box-shadow:0 15px 30px rgba(201,164,109,.2);}
-.product img{width:100%;height:300px;object-fit:cover;border-radius:12px;}
+.product img{width:100%;height:250px;object-fit:cover;border-radius:12px;}
 .product h2{margin:12px 0 6px;}
 .desc{color:#bdbdbd;font-size:14px;}
-.price{color:var(--accent);font-size:24px;font-weight:bold;margin-top:10px;}
-.btn{width:100%;margin-top:14px;padding:12px;border:none;border-radius:9px;background:var(--accent);color:black;font-weight:bold;cursor:pointer;transition:.2s;}
+.price{color:var(--accent);font-size:22px;font-weight:bold;margin-top:8px;}
+.btn{width:100%;margin-top:12px;padding:12px;border:none;border-radius:10px;background:var(--accent);color:black;font-weight:bold;cursor:pointer;transition:.2s;}
 .btn:hover{transform:scale(1.02);}
-
-/* CART */
-.cart-toggle{position:fixed;top:18px;right:18px;background:var(--accent);color:black;padding:10px 14px;border-radius:10px;font-weight:bold;cursor:pointer;z-index:1000;}
-.cart-count{background:red;color:white;font-size:12px;padding:2px 6px;border-radius:50%;margin-left:6px;vertical-align:top;}
-#cart{position:fixed;right:-360px;top:0;width:360px;height:100%;background:#0f0f0f;border-left:1px solid #333;padding:20px;transition:right .35s ease;overflow:auto;z-index:999;}
+.cart-toggle{position:fixed;top:18px;right:18px;background:var(--accent);color:black;padding:10px 14px;border-radius:12px;font-weight:bold;cursor:pointer;z-index:1000;}
+#cart{position:fixed;right:-360px;top:0;width:320px;height:100%;background:var(--card);border-left:1px solid #333;padding:20px;transition:.35s;overflow:auto;z-index:999;}
 #cart.open{right:0;}
-.cart-item{border-bottom:1px solid #333;padding:10px 0;display:flex;align-items:center;justify-content:space-between;}
-.cart-item img{width:50px;height:50px;border-radius:8px;margin-right:10px;object-fit:cover;}
-.cart-item-info{flex:1;}
-.cart-item button{background:red;color:white;border:none;border-radius:6px;padding:2px 6px;cursor:pointer;}
-.checkout-btn{width:100%;margin-top:14px;padding:12px;border:none;border-radius:9px;background:var(--highlight);color:black;font-weight:bold;cursor:pointer;transition:.2s;}
-.checkout-btn:hover{background:var(--accent);}
-
-/* SUPPORT */
+.cart-item{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #333;padding:8px 0;}
+.cart-item button{background:red;color:white;border:none;padding:4px 8px;border-radius:6px;cursor:pointer;}
+#cart h2{margin-bottom:12px;}
+#cart h3{margin-top:12px;}
 .support{position:fixed;bottom:20px;left:20px;background:#111;border:1px solid #333;padding:12px 14px;border-radius:12px;cursor:pointer;}
 .support-box{position:fixed;bottom:70px;left:20px;width:270px;background:#111;border:1px solid #333;border-radius:12px;padding:12px;display:none;}
 .support-box textarea{width:100%;background:#0a0a0a;color:white;border:1px solid #333;border-radius:8px;padding:8px;}
-
-/* FOOTER */
-footer{text-align:center;padding:35px;color:#777;border-top:1px solid #222;}
-
-/* ANIMATION */
-@keyframes fadeUp{from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);}}
-
-/* PROMO POPUP */
-#promoPopup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0.8);width:320px;background:var(--card);
-border:2px solid var(--accent);border-radius:14px;padding:20px;text-align:center;z-index:2000;display:none;box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;transition:opacity 0.4s ease, transform 0.4s ease;}
-#promoPopup.show{display:block;opacity:1;transform:translate(-50%,-50%) scale(1);}
-#promoPopup h2{color:var(--accent);margin-bottom:12px;text-shadow:0 0 10px #ffd700,0 0 20px #c9a46d;}
-#promoPopup p{color:var(--highlight);margin-bottom:16px;text-shadow:0 0 6px #ffd700;}
-#promoPopup button{padding:10px 16px;background:var(--accent);color:black;border:none;border-radius:8px;cursor:pointer;font-weight:bold;transition:.2s;}
-#promoPopup button:hover{background:var(--highlight);}
+#promo-popup{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);display:flex;justify-content:center;align-items:center;z-index:2000;display:none;}
+#promo-popup div{background:#111;padding:28px;border-radius:18px;text-align:center;animation:fadeIn 0.5s;}
+#promo-popup button{margin-top:16px;padding:10px 18px;border:none;border-radius:10px;background:var(--accent);color:black;font-weight:bold;cursor:pointer;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 </style>
 </head>
 <body>
 
-<div class="cart-toggle" onclick="toggleCart()">🛒 Cart <span class="cart-count" id="cartCount">0</span></div>
+<div class="cart-toggle" onclick="toggleCart()">🛒 Cart <span id="cartCount">0</span></div>
+
+<header>
+  <h1>Daniel Distributes</h1>
+  <div class="tagline">Only the best and affordable seller</div>
+</header>
 
 <section class="hero">
-  <h1>Daniel Distributes</h1>
-  <p>Luxury accessories • Fragrance • Tech</p>
+  <h2>Premium Accessories, Fragrances & Tech</h2>
   <div class="drop">NEW DROP • LIMITED STOCK</div>
 </section>
 
-<section class="trust">
-  <div>✔ Secure Checkout</div>
-  <div>✔ Fast Shipping</div>
-  <div>✔ Real Customer Support</div>
-  <div>✔ Satisfaction Guaranteed</div>
-</section>
-
-<section class="social">
-  <div class="big">1,000+ Happy Customers</div>
-  <div class="small">Rated 4.9★ • New Drops Weekly</div>
-</section>
-
 <section class="products">
-  <div class="product"><img src="Airpods.jpg"><h2>Fairpods pro3</h2><p class="desc">Active noise cancellation Fairpods.</p><div class="price">$84.99</div><button class="btn" onclick="addToCart('Airpods Pro3',84.99,'Airpods.jpg','https://buy.stripe.com/test_3cIaEZ4Uf5BH7Es6Uhao800')">Add to Cart</button></div>
-  <div class="product"><img src="Luis Vuitton.png"><h2>LV Imagine</h2><p class="desc">Fresh clean scent 100ml.</p><div class="price">$129.99</div><button class="btn" onclick="addToCart('LV Imagine',129.99,'Luis Vuitton.png','https://buy.stripe.com/bJecN69RV8dP7495pG43S01')">Add to Cart</button></div>
-  <div class="product"><img src="Creed.png"><h2>Creed Aventus</h2><p class="desc">Bold premium scent.</p><div class="price">$119.99</div><button class="btn" onclick="addToCart('Creed Aventus',119.99,'Creed.png','https://buy.stripe.com/aFabJ20hl8dP0FLg4k43S02')">Add to Cart</button></div>
-  <div class="product"><img src="YSL.png"><h2>YSL Libre</h2><p class="desc">Smooth floral fragrance.</p><div class="price">$87.99</div><button class="btn" onclick="addToCart('YSL Libre',87.99,'YSL.png','https://buy.stripe.com/cNi6oI9RVfGh2NTdWc43S03')">Add to Cart</button></div>
+  <div class="product">
+    <img src="Airpods.jpg" alt="">
+    <h2>Airpods Pro3</h2>
+    <p class="desc">Active noise cancellation earbuds.</p>
+    <div class="price">$84.99</div>
+    <button class="btn" onclick="addToCart('Airpods Pro3',84.99)">Add to Cart</button>
+  </div>
+  <div class="product">
+    <img src="Luis Vuitton.png" alt="">
+    <h2>LV Imagination 100ml</h2>
+    <p class="desc">Fresh clean scent with long-lasting performance.</p>
+    <div class="price">$129.99</div>
+    <button class="btn" onclick="addToCart('LV Imagination',129.99)">Add to Cart</button>
+  </div>
+  <div class="product">
+    <img src="Creed.png" alt="">
+    <h2>Creed Aventus 75ml</h2>
+    <p class="desc">Bold premium scent designed for everyday wear.</p>
+    <div class="price">$119.99</div>
+    <button class="btn" onclick="addToCart('Creed Aventus',119.99)">Add to Cart</button>
+  </div>
+  <div class="product">
+    <img src="YSL.png" alt="">
+    <h2>YSL Libre 90ml</h2>
+    <p class="desc">Smooth floral fragrance with modern notes.</p>
+    <div class="price">$87.99</div>
+    <button class="btn" onclick="addToCart('YSL Libre',87.99)">Add to Cart</button>
+  </div>
 </section>
 
 <div id="cart">
   <h2>Your Cart</h2>
   <div id="cartItems"></div>
   <h3 id="total">$0.00</h3>
-  <button class="checkout-btn" onclick="checkout()">Checkout</button>
+  <button class="btn" onclick="checkout()">Checkout</button>
 </div>
 
 <div class="support" onclick="toggleSupport()">💬 AI Support</div>
@@ -120,61 +104,79 @@ border:2px solid var(--accent);border-radius:14px;padding:20px;text-align:center
   <textarea rows="3" placeholder="Type your message..."></textarea>
 </div>
 
-<div id="promoPopup">
-  <h2>Special Offer!</h2>
-  <p>Use promo code <strong>DD10</strong> for 10% off</p>
-  <button onclick="closePromo()">Got it!</button>
+<div id="promo-popup">
+  <div>
+    <h2>Use Promo Code <span style="color:var(--accent)">DD10</span> for 10% Off!</h2>
+    <button onclick="closePromo()">Got it!</button>
+  </div>
 </div>
+
+<footer>
+  Independent reseller • Follow @daniel.distributes on TikTok
+</footer>
 
 <script>
 let cart=[];
-function addToCart(name,price,img,url){
-  cart.push({name,price,img,url});
+function addToCart(name,price){
+  cart.push({name,price});
   renderCart();
   animateAdd();
 }
-function removeFromCart(i){cart.splice(i,1);renderCart();}
+function removeFromCart(index){
+  cart.splice(index,1);
+  renderCart();
+}
 function renderCart(){
-  const box=document.getElementById("cartItems");let total=0;box.innerHTML="";
-  cart.forEach((item,idx)=>{total+=item.price;
-    box.innerHTML+=`
-      <div class="cart-item">
-        <img src="${item.img}">
-        <div class="cart-item-info">${item.name} - $${item.price.toFixed(2)}</div>
-        <button onclick="removeFromCart(${idx})">X</button>
-      </div>`;
+  const box=document.getElementById("cartItems");
+  let total=0;
+  box.innerHTML="";
+  cart.forEach((item,i)=>{
+    total+=item.price;
+    box.innerHTML+=`<div class="cart-item">${item.name} - $${item.price.toFixed(2)} <button onclick="removeFromCart(${i})">x</button></div>`;
   });
   document.getElementById("total").innerText="$"+total.toFixed(2);
   document.getElementById("cartCount").innerText=cart.length;
 }
 function toggleCart(){document.getElementById("cart").classList.toggle("open");}
 function toggleSupport(){const b=document.getElementById("supportBox");b.style.display=b.style.display==="block"?"none":"block";}
-
-// Add-to-cart animation
 function animateAdd(){
-  const popup=document.createElement("div");popup.innerText="Added to Cart!";
-  Object.assign(popup.style,{position:"fixed",top:"50px",right:"50px",background:"var(--accent)",color:"black",padding:"10px 16px",
-  borderRadius:"10px",fontWeight:"bold",zIndex:"2000",opacity:"0",transition:"all 0.4s ease"});
+  const popup=document.createElement('div');
+  popup.textContent="Added to cart!";
+  popup.style.position="fixed";
+  popup.style.top="20%";
+  popup.style.left="50%";
+  popup.style.transform="translateX(-50%)";
+  popup.style.background="var(--accent)";
+  popup.style.color="black";
+  popup.style.padding="10px 18px";
+  popup.style.borderRadius="12px";
+  popup.style.fontWeight="bold";
+  popup.style.zIndex="3000";
+  popup.style.opacity="0";
+  popup.style.transition="all .5s";
   document.body.appendChild(popup);
-  setTimeout(()=>{popup.style.opacity="1";popup.style.transform="translateY(-10px)";},10);
-  setTimeout(()=>{popup.style.opacity="0";popup.style.transform="translateY(-30px)";},1200);
-  setTimeout(()=>document.body.removeChild(popup),1600);
+  setTimeout(()=>popup.style.opacity="1",10);
+  setTimeout(()=>{popup.style.opacity="0"; setTimeout(()=>popup.remove(),500)},1000);
 }
 
-// Checkout redirects to Stripe
-function checkout(){
-  if(cart.length===0){alert("Cart is empty!");return;}
-  // Redirect each item to Stripe (simple simulation: first item only)
-  const firstItem = cart[0];
-  if(firstItem.url){window.open(firstItem.url,"_blank");}
-  cart=[];renderCart();toggleCart();
+// Show promo once
+if(!localStorage.getItem('promoShown')){
+  document.getElementById('promo-popup').style.display='flex';
+  localStorage.setItem('promoShown','true');
 }
+function closePromo(){document.getElementById('promo-popup').style.display='none';}
 
-// Promo popup
-function showPromo(){if(!localStorage.getItem("promoSeen")){const popup=document.getElementById("promoPopup");popup.classList.add("show");localStorage.setItem("promoSeen","true");}}
-function closePromo(){const popup=document.getElementById("promoPopup");popup.classList.remove("show");setTimeout(()=>popup.style.display="none",400);}
-window.onload=showPromo;
+// Stripe Checkout
+async function checkout(){
+  if(cart.length===0){alert("Add items first!"); return;}
+  const response = await fetch("/create-checkout-session", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({items:cart})
+  });
+  const {url} = await response.json();
+  window.location=url;
+}
 </script>
-
 </body>
 </html>
