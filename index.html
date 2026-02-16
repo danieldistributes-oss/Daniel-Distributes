@@ -7,128 +7,181 @@
 
 <style>
 :root{
-  --gold:#d6b26e;
+  --bg:#060606;
+  --card:#111;
+  --accent:#c9a46d;
+  --muted:#9f9f9f;
 }
+
+*{box-sizing:border-box}
 
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#090909;
+  background:var(--bg);
   color:white;
+  overflow-x:hidden;
 }
 
 /* HERO */
-header{
+.hero{
+  min-height:90vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
   text-align:center;
-  padding:70px 20px 45px;
-  border-bottom:1px solid #222;
-  background:linear-gradient(to bottom,#121212,#090909);
+  padding:20px;
+  background:
+    linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.85)),
+    url("hero.jpg") center/cover no-repeat;
 }
 
-h1{
+.hero h1{
+  font-size:56px;
   margin:0;
-  font-size:42px;
   letter-spacing:1px;
+  animation:fadeUp .8s ease;
 }
 
-.tagline{color:#aaa;margin-top:10px;}
+.hero p{
+  margin-top:10px;
+  font-size:18px;
+  color:var(--muted);
+  animation:fadeUp 1s ease;
+}
+
 .drop{
-  margin-top:16px;
-  display:inline-block;
-  background:var(--gold);
-  color:black;
-  padding:6px 12px;
+  margin-top:20px;
+  background:rgba(201,164,109,.18);
+  border:1px solid var(--accent);
+  color:var(--accent);
+  padding:8px 16px;
   border-radius:20px;
   font-size:12px;
-  font-weight:bold;
   letter-spacing:1px;
+  animation:fadeUp 1.2s ease;
+}
+
+/* TRUST STRIP */
+.trust{
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  flex-wrap:wrap;
+  padding:18px;
+  color:#bbb;
+  border-bottom:1px solid #222;
+  font-size:14px;
+}
+
+/* SOCIAL PROOF */
+.social{
+  text-align:center;
+  padding:28px 20px;
+}
+
+.social .big{
+  font-size:28px;
+  color:var(--accent);
+  font-weight:bold;
+}
+
+.social .small{
+  color:#aaa;
+  margin-top:6px;
 }
 
 /* PRODUCTS */
 .products{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:22px;
-  padding:30px;
-  max-width:1100px;
+  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+  gap:24px;
+  padding:45px 28px;
+  max-width:1250px;
   margin:auto;
 }
 
 .product{
-  background:#151515;
-  border-radius:16px;
+  background:rgba(20,20,20,.95);
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:18px;
   padding:18px;
-  box-shadow:0 6px 18px rgba(0,0,0,.4);
-  transition:.25s;
+  transition:.3s;
+  animation:fadeUp .8s ease both;
 }
 
 .product:hover{
-  transform:translateY(-6px);
-  box-shadow:0 10px 25px rgba(214,178,110,.25);
+  transform:translateY(-8px);
+  box-shadow:0 15px 30px rgba(201,164,109,.2);
 }
 
 .product img{
   width:100%;
-  height:260px;
+  height:300px;
   object-fit:cover;
   border-radius:12px;
 }
 
-.product h2{margin:12px 0 8px;}
-.desc{color:#bbb;font-size:14px;}
-.price{
-  font-size:22px;
-  margin-top:10px;
-  color:var(--gold);
-  font-weight:bold;
+.product h2{
+  margin:12px 0 6px;
 }
 
-button{
+.desc{
+  color:#bdbdbd;
+  font-size:14px;
+}
+
+.price{
+  color:var(--accent);
+  font-size:24px;
+  font-weight:bold;
+  margin-top:10px;
+}
+
+.btn{
   width:100%;
-  border:none;
+  margin-top:14px;
   padding:12px;
-  border-radius:8px;
-  margin-top:12px;
+  border:none;
+  border-radius:9px;
+  background:var(--accent);
+  color:black;
   font-weight:bold;
   cursor:pointer;
+  transition:.2s;
 }
 
-.buy-btn{
-  background:var(--gold);
-  color:black;
+.btn:hover{
+  transform:scale(1.02);
 }
 
-.buy-btn:hover{
-  opacity:.9;
-}
-
-/* CART BUTTON */
+/* CART */
 .cart-toggle{
   position:fixed;
-  top:20px;
-  right:20px;
-  background:var(--gold);
+  top:18px;
+  right:18px;
+  background:var(--accent);
   color:black;
   padding:10px 14px;
   border-radius:10px;
   font-weight:bold;
   cursor:pointer;
-  z-index:999;
+  z-index:1000;
 }
 
-/* CART PANEL */
 #cart{
   position:fixed;
-  right:-400px;
+  right:-360px;
   top:0;
   width:320px;
   height:100%;
-  background:#111;
+  background:#0f0f0f;
   border-left:1px solid #333;
   padding:20px;
-  transition:.3s;
+  transition:.35s;
   overflow:auto;
-  z-index:998;
+  z-index:999;
 }
 
 #cart.open{right:0;}
@@ -138,51 +191,51 @@ button{
   padding:10px 0;
 }
 
-.checkout{
-  background:var(--gold);
-  color:black;
-  margin-top:15px;
-}
-
-/* CHAT BUTTON */
-.chat-btn{
+/* SUPPORT */
+.support{
   position:fixed;
   bottom:20px;
   left:20px;
-  background:#1a1a1a;
+  background:#111;
   border:1px solid #333;
   padding:12px 14px;
   border-radius:12px;
   cursor:pointer;
-  font-size:14px;
 }
 
-/* CHAT BOX */
-.chat-box{
+.support-box{
   position:fixed;
   bottom:70px;
   left:20px;
-  width:260px;
-  background:#141414;
+  width:270px;
+  background:#111;
   border:1px solid #333;
   border-radius:12px;
   padding:12px;
   display:none;
 }
 
-.chat-box textarea{
+.support-box textarea{
   width:100%;
-  background:#0d0d0d;
-  border:1px solid #333;
+  background:#0a0a0a;
   color:white;
+  border:1px solid #333;
   border-radius:8px;
   padding:8px;
 }
 
+/* FOOTER */
 footer{
   text-align:center;
-  padding:30px;
+  padding:35px;
   color:#777;
+  border-top:1px solid #222;
+}
+
+/* ANIMATION */
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
@@ -191,11 +244,23 @@ footer{
 
 <div class="cart-toggle" onclick="toggleCart()">🛒 Cart</div>
 
-<header>
+<section class="hero">
   <h1>Daniel Distributes</h1>
-  <div class="tagline">Only the best and affordable seller</div>
+  <p>Luxury accessories • Fragrance • Tech</p>
   <div class="drop">NEW DROP • LIMITED STOCK</div>
-</header>
+</section>
+
+<section class="trust">
+  <div>✔ Secure Checkout</div>
+  <div>✔ Fast Shipping</div>
+  <div>✔ Real Customer Support</div>
+  <div>✔ Satisfaction Guaranteed</div>
+</section>
+
+<section class="social">
+  <div class="big">1,000+ Happy Customers</div>
+  <div class="small">Rated 4.9★ • New Drops Weekly</div>
+</section>
 
 <section class="products">
 
@@ -204,7 +269,7 @@ footer{
     <h2>Premium Wireless Earbuds</h2>
     <p class="desc">Active noise cancellation earbuds.</p>
     <div class="price">$84.99</div>
-    <button class="buy-btn" onclick="addToCart('Earbuds',84.99,'https://buy.stripe.com/test_3cIaEZ4Uf5BH7Es6Uhao800')">Add to Cart</button>
+    <button class="btn" onclick="addToCart('Earbuds',84.99)">Add to Cart</button>
   </div>
 
   <div class="product">
@@ -212,7 +277,7 @@ footer{
     <h2>Luxury Inspired Fragrance</h2>
     <p class="desc">Fresh clean scent 100ml.</p>
     <div class="price">$129.99</div>
-    <button class="buy-btn" onclick="addToCart('Fragrance',129.99,'https://buy.stripe.com/bJecN69RV8dP7495pG43S01')">Add to Cart</button>
+    <button class="btn" onclick="addToCart('Fragrance',129.99)">Add to Cart</button>
   </div>
 
   <div class="product">
@@ -220,45 +285,51 @@ footer{
     <h2>Signature Cologne</h2>
     <p class="desc">Bold premium scent.</p>
     <div class="price">$119.99</div>
-    <button class="buy-btn" onclick="addToCart('Cologne',119.99,'https://buy.stripe.com/aFabJ20hl8dP0FLg4k43S02')">Add to Cart</button>
+    <button class="btn" onclick="addToCart('Cologne',119.99)">Add to Cart</button>
+  </div>
+
+  <div class="product">
+    <img src="YSL.png">
+    <h2>Elegant Perfume</h2>
+    <p class="desc">Smooth floral fragrance.</p>
+    <div class="price">$87.99</div>
+    <button class="btn" onclick="addToCart('Perfume',87.99)">Add to Cart</button>
   </div>
 
 </section>
 
-<!-- CART -->
 <div id="cart">
   <h2>Your Cart</h2>
   <div id="cartItems"></div>
-  <h3 id="total">$0</h3>
+  <h3 id="total">$0.00</h3>
 </div>
 
-<!-- CHAT -->
-<div class="chat-btn" onclick="toggleChat()">💬 Need help?</div>
-<div class="chat-box" id="chatBox">
+<div class="support" onclick="toggleSupport()">💬 AI Support</div>
+<div class="support-box" id="supportBox">
   <strong>Customer Support</strong>
-  <p style="color:#aaa;font-size:13px;">Leave a message and we’ll reply.</p>
-  <textarea rows="3" placeholder="Type here..."></textarea>
+  <p style="color:#aaa;font-size:13px;">Usually replies within 10 minutes.</p>
+  <textarea rows="3" placeholder="Type your message..."></textarea>
 </div>
 
 <footer>
-  Follow on TikTok: @daniel.distributes
+  Independent reseller • Follow @daniel.distributes on TikTok
 </footer>
 
 <script>
 let cart=[];
 
-function addToCart(name,price,link){
-  cart.push({name,price,link});
+function addToCart(name,price){
+  cart.push({name,price});
   renderCart();
 }
 
 function renderCart(){
-  const container=document.getElementById("cartItems");
+  const box=document.getElementById("cartItems");
   let total=0;
-  container.innerHTML="";
-  cart.forEach(item=>{
-    total+=item.price;
-    container.innerHTML+=`<div class="cart-item">${item.name} - $${item.price}</div>`;
+  box.innerHTML="";
+  cart.forEach(i=>{
+    total+=i.price;
+    box.innerHTML+=`<div class="cart-item">${i.name} - $${i.price}</div>`;
   });
   document.getElementById("total").innerText="$"+total.toFixed(2);
 }
@@ -267,9 +338,9 @@ function toggleCart(){
   document.getElementById("cart").classList.toggle("open");
 }
 
-function toggleChat(){
-  const box=document.getElementById("chatBox");
-  box.style.display=box.style.display==="block"?"none":"block";
+function toggleSupport(){
+  const b=document.getElementById("supportBox");
+  b.style.display=b.style.display==="block"?"none":"block";
 }
 </script>
 
